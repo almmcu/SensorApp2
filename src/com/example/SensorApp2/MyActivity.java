@@ -24,10 +24,14 @@ import java.util.TreeMap;
 
 public class MyActivity extends Activity  implements SensorEventListener {
 
+    // open cv icin bir link
+    // https://www.youtube.com/watch?v=hk_DoTIclFY
     private Sensor mGyroSensor;
     private Sensor mLineerAccSensor;
     private TextView tv;
     private TextView tv2;
+    private TextView txtSaniyeilikMesafe;
+    private TextView txtSaniyelikİvme;
     private SensorManager sMgr;
     float angularXMaxSpeedOneSec = 0;
     float angularXMaxSpeed = 0;
@@ -43,6 +47,7 @@ public class MyActivity extends Activity  implements SensorEventListener {
     Button btn ;
     int cal = 0 ;
     ArrayList<Double> saniyelik = new ArrayList<>();
+    ArrayList<Double> saniyelikMesurement = new ArrayList<>();
     ArrayList<Double> saniyelikMesafe = new ArrayList<>();
     ArrayList<ArrayList<Double>> accValueMap = new ArrayList<>();
 
@@ -57,6 +62,8 @@ public class MyActivity extends Activity  implements SensorEventListener {
 
             tv= (TextView)findViewById(R.id.txt2);
             tv2= (TextView)findViewById(R.id.txt3);
+            txtSaniyelikİvme= (TextView)findViewById(R.id.txtSaniyelikIvme);
+            txtSaniyeilikMesafe= (TextView)findViewById(R.id.txtSaniyelikMesafe);
             btn = (Button) findViewById(R.id.btnBaslaBitir);}
         catch (Exception e){
             System.out.println(e);
@@ -79,7 +86,7 @@ public class MyActivity extends Activity  implements SensorEventListener {
 
         long timediff = temp - currentTimeinMilisecoond;
         Sensor sensor = event.sensor;
-        if (timediff >= 50){
+        if (timediff >= 10){
 
         if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
             float angularXSpeed = event.values[0];
@@ -133,7 +140,7 @@ public class MyActivity extends Activity  implements SensorEventListener {
                 double tempp = (0.5*angularXMaxSpeedOneSec *angularXMaxSpeedOneSec);
                 if (tempp < 0) tempp = - temp;
                 mesafe = mesafe + tempp *100 ;
-
+                saniyelikMesurement.add(tempp*100);
                 accValueMap.add( saniyelik);
                 saniyelikMesafe.add(tempp * 100);
                 angularXMaxSpeedOneSec = 0 ;
@@ -170,6 +177,25 @@ if (cal % 2 == 0 )
     +"\n Tamsayı değeri:  " + (int)mesafe);
     int a1 = (int)mesafe;
     System.out.println(accValueMap);
+    String mesafeler = "";
+    for (double a: saniyelikMesurement) {
+        mesafeler += (a + "  " );
+    }
+    txtSaniyeilikMesafe.setText(mesafeler);
+    saniyelikMesurement.clear();
+    int i = 1;
+    mesafeler = "\n";
+    for (ArrayList<Double> accList:accValueMap) {
+        mesafeler += i +". saniye:\n ";
+        for (double accValalue:accList
+             ) {
+
+            mesafeler += "   " +accValalue;
+        }
+        mesafeler += "\n";
+        i++;
+    }
+    txtSaniyelikİvme.setText(mesafeler);
     accValueMap.clear();
     saniyelikMesafe.clear();
     mesafe = 0;

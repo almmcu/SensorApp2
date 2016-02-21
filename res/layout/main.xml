@@ -23,5 +23,20 @@
             android:text="Basla / Bitir"
             android:onClick="baslaBitir"
             android:id="@+id/btnBaslaBitir"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello World, MyActivity"
+            android:id="@+id/txtSaniyelikMesafe"
+    />
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello World, MyActivity"
+            android:id="@+id/txtSaniyelikIvme"
+    />
+
 </LinearLayout>
 
