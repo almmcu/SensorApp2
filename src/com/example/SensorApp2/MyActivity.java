@@ -27,6 +27,7 @@ public class MyActivity extends Activity  implements SensorEventListener {
     // open cv icin bir link
     // https://www.youtube.com/watch?v=hk_DoTIclFY
     // evet
+    // hayırdır bakalım
     private Sensor mGyroSensor;
     private Sensor mLineerAccSensor;
     private TextView tv;
